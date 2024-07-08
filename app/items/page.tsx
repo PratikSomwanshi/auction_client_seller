@@ -1,9 +1,9 @@
-import Home from "@/components/home";
+import ItemAcceptanceForm from "@/components/itemsCreatePage";
 import { getSession } from "@/utils/actions";
 import { redirect } from "next/navigation";
 import React from "react";
 
-async function LandingPage() {
+async function ItemsAddPage() {
     const session = await getSession();
 
     if (!session.isLoggedIn) {
@@ -12,9 +12,12 @@ async function LandingPage() {
 
     return (
         <div>
-            <Home username={session.username} />
+            <ItemAcceptanceForm
+                seller={session.username}
+                token={session.token}
+            />
         </div>
     );
 }
 
-export default LandingPage;
+export default ItemsAddPage;

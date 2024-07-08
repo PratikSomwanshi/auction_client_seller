@@ -1,20 +1,20 @@
-import Home from "@/components/home";
+import Login from "@/components/login";
 import { getSession } from "@/utils/actions";
 import { redirect } from "next/navigation";
 import React from "react";
 
-async function LandingPage() {
+async function LoginPage() {
     const session = await getSession();
 
-    if (!session.isLoggedIn) {
-        redirect("/login");
+    if (session.isLoggedIn) {
+        redirect("/");
     }
 
     return (
         <div>
-            <Home username={session.username} />
+            <Login />
         </div>
     );
 }
 
-export default LandingPage;
+export default LoginPage;
