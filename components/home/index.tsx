@@ -17,7 +17,7 @@ type Item = {
 function Home({ username }: { username: string | undefined }) {
     async function fetchItems(): Promise<Item[]> {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BIDDING_SERVICE_URL}/items/not/${username}`,
+            `${process.env.NEXT_PUBLIC_BIDDING_SERVICE_URL}/items/not-sold/seller/${username}`,
             {
                 method: "GET",
                 headers: {
@@ -31,12 +31,14 @@ function Home({ username }: { username: string | undefined }) {
         }
 
         const res = await response.json();
+        console.log(res);
         return res.data;
     }
 
     const {
         data: items,
         isError,
+        error,
         isLoading,
     } = useQuery<Item[], Error>({
         queryKey: ["items"],
@@ -48,6 +50,7 @@ function Home({ username }: { username: string | undefined }) {
     if (isError) {
         return (
             <div className="flex justify-center items-center h-[90vh] w-screen">
+                <h1>{JSON.stringify(error)}</h1>
                 <h1 className="text-2xl font-semibold">Error fetching items</h1>
             </div>
         );
